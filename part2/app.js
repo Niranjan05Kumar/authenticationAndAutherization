@@ -49,12 +49,18 @@ app.post("/login", async (req, res) => {
       if (result) {
         const token = jwt.sign({ email: user.email }, "this_is_a_secret_key");
         res.cookie("token", token);
-        res.send("Login successful"); // you can create profile page with a button to logout
+        res.render("profile", {user})
       } else {
         return res.status(400).send("Something went wrong");
       }
     });
   }
+});
+
+
+// direct login page if user is already created
+app.get("/login", (req, res) => {
+    res.render("login");
 });
 
 app.get("/logout", (req, res) => {
